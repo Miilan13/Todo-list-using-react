@@ -1,22 +1,27 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { IoAddCircle } from "react-icons/io5";
 
 export default function Addfunction({ onNewitem }) {
-  const [nameChange, setNameChange] = useState();
-  const [dateChange, setDateChange] = useState();
+  // const [nameChange, setNameChange] = useState();
+  // const [dateChange, setDateChange] = useState();
 
-  const handleNameChnage = (event) => {
-    setNameChange(event.target.value);
-  };
-  const handleDateChnage = (event) => {
-    setDateChange(event.target.value);
-  };
+  // const handleNameChnage = (event) => {
+  //   setNameChange(event.target.value);
+  // };
+  // const handleDateChnage = (event) => {
+  //   setDateChange(event.target.value);
+  // };
 
   const addButtonHandling = () => {
+    let nameChange = nameChangeref.current.value;
+    let dateChange = dateChangeref.current.value;
+    nameChangeref.current.value = "";
+    dateChangeref.current.value = "";
     onNewitem(nameChange, dateChange);
-    setNameChange("");
-    setDateChange("");
   };
+
+  const nameChangeref = useRef();
+  const dateChangeref = useRef();
 
   return (
     <div>
@@ -24,21 +29,19 @@ export default function Addfunction({ onNewitem }) {
         <div className="col-6">
           <input
             type="text"
+            ref={nameChangeref}
             placeholder="Enter Todo Here"
-            value={nameChange}
-            onChange={handleNameChnage}
           />
         </div>
 
         <div className="col-4">
-          <input type="date" onChange={handleDateChnage} />
+          <input type="date" ref={dateChangeref} />
         </div>
 
         <div className="col-2">
           <button
             onClick={addButtonHandling}
             type="button"
-            value={dateChange}
             className="btn btn-success"
           >
             <IoAddCircle />
